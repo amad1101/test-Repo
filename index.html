@@ -2,89 +2,91 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="main.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main2.css">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
 <body>
-    <h2>Phone numbers</h2>
-<div class="rTable">
-<div class="rTableRow1">
-<div class="rTableHead"><strong>Name</strong></div>
-<div class="rTableHead"><span style="font-weight: bold;">Telephone</span></div>
-<div class="rTableHead">&nbsp;</div>
-</div>
-<div class="rTableRow">
-<div class="rTableCell">John</div>
-<div class="rTableCell1" onmouseout="mouseUp()"><a href="tel:0123456785">0123 456 785</a></div>
-<div class="rTableCell"><img src="images/check.gif" alt="checked" /></div>
-</div>
-<div class="rTableRow">
-<div class="rTableCell">Cassie</div>
-<div class="rTableCell"><a href="tel:9876532432">9876 532 432</a></div>
-<div class="rTableCell"><img src="images/check.gif" alt="checked" /></div>
-</div>
-</div>
+    <div class="wrapper">
+        <div class="cell suggestion"  
+        style="border: 1px solid grey; 
+        border-collapse: collapse;
+        font-weight: 400;
+        color: black;
+        width: 90px;
+        height: 90px;
+        /* width: 30px; */
+        grid-area: cell-root-A1;
+        ">
+            <input class="cell-data cell-active">
+        </div>
+        <div class="handler"></div>
+        <div class="cell suggestion"  
+        style="border: 1px solid grey; 
+        border-collapse: collapse;
+        font-weight: 400;
+        color: black;
+        width: 90px;
+        height: 90px;
+        /* width: 30px; */
+        /* grid-area: cell-root-A1; */
+        ">
+            <input class="cell-data cell-active">
+        </div>
+        <div style="bottom"></div>
+        
+    </div>
+
+    <!-- <div class="cell suggestion" style="border: 1px solid grey;
+    border-collapse: collapse;
+    font-weight: 400;
+    color: black;
+    grid-area: cell-root-A1;
+    "><input class="cell-data cell-active"><div class="suggestion-content"><a tabindex="-1">js grammar</a><a tabindex="-1">js grammar</a></div></div> -->
 </body>
-
 <script>
-    var test = document.getElementsByClassName("rTableCell1");
-    var handler = document.querySelector('.rTableRow');
-    var wrapper = handler.closest('.rTableRow');
-    var containerOffsetLeft = wrapper.offsetLeft;
-    
-    
-    // test.addEventListener('mousedown', function (e) {
-    //     // curCol = e.target.parentElement;
-    //     // nxtCol = curCol.nextElementSibling;
-    //     let pageX = e.pageX; 
+    var handler = document.querySelector('.handler');
+    var wrapper = handler.closest('.wrapper');
+    // var boxA = wrapper.querySelector('.box');
+    var boxA = document.querySelector('.cell')
+    var isHandlerDragging = false;
+
+    document.addEventListener('mousedown', function(e) {
+        // If mousedown event is fired from .handler, toggle flag to true
+        // console.log(handler);
+        // console.log(e.target);
         
-    //     // var padding = paddingDiff(curCol);
-    //     handler
-    //     // curColWidth = curCol.offsetWidth - padding;
-    //     // if (nxtCol)
-    //     //     nxtColWidth = nxtCol.offsetWidth - padding;
-    // });
-    // var gete = prompt("ente px")
+        if (e.target === handler) {
+            isHandlerDragging = true;
+        }
+    });
 
-    // test.style.width = gete + "%"
+    document.addEventListener('mousemove', function(e) {
+        // Don't do anything if dragging flag is false
+        if (!isHandlerDragging) {
+            return false;
+        }
 
-    function mouseUp () {
-                SetCursor("ew-resize");
-            }
-            
-    for(var index = 0; index < test.length; index++) {
+        // Get offset
+        var containerOffsetLeft = wrapper.offsetLeft;
+
+        // Get x-coordinate of pointer relative to container
+        var pointerRelativeXpos = e.clientX - containerOffsetLeft;
         
-        (function(index) {
-            
-            test[index].addEventListener("click", function(e) {
-            // console.log("Clicked index: " + index);
-            let pageX = e.pageX;
-            
-            console.log(pageX)
-            test[index].style.width = (pageX - e.pageX) + '%'
-            })
-        })(index);
-    }
+        // Arbitrary minimum width set on box A, otherwise its inner content will collapse to width of 0
+        var boxAminWidth = 60;
 
-    // for (let index = 0; index < test.length; index++) {
-    //     test[index].style.width = gete + "%"
-        
-    // }
+        // Resize box A
+        // * 8px is the left/right spacing between .handler and its inner pseudo-element
+        // * Set flex-grow to 0 to prevent it from growing
+        boxA.style.width = (Math.max(boxAminWidth, pointerRelativeXpos - 8)) + 'px';
+        boxA.style.flexGrow = 0;
+    });
 
-    // document.addEventListener('mousemove', function (e) {
-    //     console.log(e.pageX-pageX);
-        
-    //     // if (curCol) {
-    //     //     var diffX = e.pageX - pageX;
-        
-    //     //     if (nxtCol)
-    //     //     nxtCol.style.width = (nxtColWidth - (diffX))+'px';
-
-    //     //     curCol.style.width = (curColWidth + diffX)+'px';
-    //     // }
-    // });
-
+    document.addEventListener('mouseup', function(e) {
+        // Turn off dragging flag when user mouse is up
+        isHandlerDragging = false;
+    });
 </script>
 </html>
