@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Phone numbers</h2>
+<div class="rTable">
+<div class="rTableRow1">
+<div class="rTableHead"><strong>Name</strong></div>
+<div class="rTableHead"><span style="font-weight: bold;">Telephone</span></div>
+<div class="rTableHead">&nbsp;</div>
+</div>
+<div class="rTableRow">
+<div class="rTableCell">John</div>
+<div class="rTableCell1" onmouseout="mouseUp()"><a href="tel:0123456785">0123 456 785</a></div>
+<div class="rTableCell"><img src="images/check.gif" alt="checked" /></div>
+</div>
+<div class="rTableRow">
+<div class="rTableCell">Cassie</div>
+<div class="rTableCell"><a href="tel:9876532432">9876 532 432</a></div>
+<div class="rTableCell"><img src="images/check.gif" alt="checked" /></div>
+</div>
+</div>
+</body>
+
+<script>
+    var test = document.getElementsByClassName("rTableCell1");
+    var handler = document.querySelector('.rTableRow');
+    var wrapper = handler.closest('.rTableRow');
+    var containerOffsetLeft = wrapper.offsetLeft;
+    
+    
+    // test.addEventListener('mousedown', function (e) {
+    //     // curCol = e.target.parentElement;
+    //     // nxtCol = curCol.nextElementSibling;
+    //     let pageX = e.pageX; 
+        
+    //     // var padding = paddingDiff(curCol);
+    //     handler
+    //     // curColWidth = curCol.offsetWidth - padding;
+    //     // if (nxtCol)
+    //     //     nxtColWidth = nxtCol.offsetWidth - padding;
+    // });
+    // var gete = prompt("ente px")
+
+    // test.style.width = gete + "%"
+
+    function mouseUp () {
+                SetCursor("ew-resize");
+            }
+            
+    for(var index = 0; index < test.length; index++) {
+        
+        (function(index) {
+            
+            test[index].addEventListener("click", function(e) {
+            // console.log("Clicked index: " + index);
+            let pageX = e.pageX;
+            
+            console.log(pageX)
+            test[index].style.width = (pageX - e.pageX) + '%'
+            })
+        })(index);
+    }
+
+    // for (let index = 0; index < test.length; index++) {
+    //     test[index].style.width = gete + "%"
+        
+    // }
+
+    // document.addEventListener('mousemove', function (e) {
+    //     console.log(e.pageX-pageX);
+        
+    //     // if (curCol) {
+    //     //     var diffX = e.pageX - pageX;
+        
+    //     //     if (nxtCol)
+    //     //     nxtCol.style.width = (nxtColWidth - (diffX))+'px';
+
+    //     //     curCol.style.width = (curColWidth + diffX)+'px';
+    //     // }
+    // });
+
+</script>
+</html>
